@@ -1,0 +1,137 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Github Profile</title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <script src="https://kit.fontawesome.com/8bc5acd820.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <link rel='stylesheet' type='text/css' media='screen' href="{%static 'css/main.css' %}">
+    <script src='main.js'></script>
+
+<body class="bg-secondary">
+
+    <header style="text-align:center;margin-top: 1%; margin-bottom: 1%;">
+        <h1>GitHub Profile Viewer</h1>
+        <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group md-form form-sm form-2 pl-0" style="width: 28%; margin-left: 36%;">
+                <input class="form-control my-0 py-1 amber-border" type="text" placeholder="Search" aria-label="Search"
+                    name="username" required>
+                <div class="input-group-append">
+                    <button><span class="input-group-text amber lighten-3" id="basic-text1"><i
+                                class="fas fa-search text-grey" aria-hidden="true"></i></span></button>
+                </div>
+            </div>
+        </form>
+    </header>
+
+    {% if data %}
+
+    <div class="card" id="card">
+        <img src="{{data.avatar_url}}" alt="user" style="width:100%">
+        <div style="background-color: hsl(42, 77%, 77%);">
+            <h1>{{data.name}}</h1>
+            <hr style="background: black; ">
+
+        </div>
+        <div class="info" style="background-color:  hsl(42, 77%, 77%);">
+            <ul style="list-style-type:none;">
+                <li class="flex-between">
+                    <span class="username">
+                        <h4 style="text-align: left; margin-left: -30px;"> Username :</h4>
+                        <h5 style="text-align: right;margin-top: -40px; margin-right: 10px;">
+                            {{data.login}}
+                        </h5>
+                    </span>
+                    <span id="username"></span>
+                </li>
+                <li class="flex-between">
+                    <span>
+                        <h4 style="text-align: left; margin-left: -30px;"> Followers :</h4>
+                        <h5 style="text-align: right;margin-top: -40px; margin-right: 10px;">
+                            {{data.followers}}
+                        </h5>
+                    </span>
+                    <span id="followers">
+                    </span>
+                </li>
+                <li class="flex-between">
+                    <span>
+                        <h4 style="text-align: left; margin-left: -30px;"> Repositries :</h4>
+                        <h5 style="text-align: right;margin-top: -40px; margin-right: 10px; margin-right: 10px;">
+                            {{data.public_repos}}
+                        </h5>
+                    </span>
+                    <span id="repos"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-danger" role="alert" style="height: 20%; width: 50%; text-align: center;margin-left: 25%;">
+        <h2>Enter Github username to see the User Profile</h2>
+    </div>
+    {% endif %}
+
+    <!-- <div class="container" style="margin-left: 24%; margin-top: 3%;">
+        <div class="row">
+            <div class="col-xl-5" style="background-color: hsla(0, 0%, 90%, 0.8);">
+                <h3 class="repo-title">{{repos_data1.name}}</h3>
+                <span class="forks">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="fork-count">{{repos_data1.forks}}</span>
+                </span>
+                <span class="stars">
+                    <i class="fas fa-star"></i>
+                    <span class="star-count">{{repos_data1.stargazers_count}}</span>
+                </span>
+                <p class="repo-description">{{repos_data1.description}}</p>
+
+            </div>
+            <div class="col-xl-5" style="margin-left: 2%;background-color: hsla(0, 0%, 90%, 0.8);">
+                <h3 class="repo-title">{{repos_data2.name}}</h3>
+                <span class="forks">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="fork-count">{{repos_data2.forks}}</span>
+                </span>
+                <span class="stars">
+                    <i class="fas fa-star"></i>
+                    <span class="star-count">{{repos_data2.stargazers_count}}</span>
+                </span>
+                <p class="repo-description">{{repos_data2.description}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-5" style="background-color: hsla(0, 0%, 90%, 0.8); margin-top: 3%;">
+                <h3 class="repo-title">{{repos_data3.name}}</h3>
+                <span class="forks">
+                    <i class="fas fa-code-branch"></i>
+                    <span class="fork-count">{{repos_data3.forks}}</span>
+                </span>
+                <span class="stars">
+                    <i class="fas fa-star"></i>
+                    <span class="star-count">{{repos_data3.stargazers_count}}</span>
+                </span>
+                <p class="repo-description">{{repos_data3.description}}</p>
+            </div>
+        </div>
+    </div> -->
+</body>
+
+
+</html>
