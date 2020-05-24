@@ -12,4 +12,4 @@ should display avatar, username, followers count, repository count.
 -   User should get an alert if the username is not valid
 <img src="Github Profile.png">
 <img src="Github Profile(2).png">
-<img src="Github Profile(1).png">
+<img src="Github Profile1.png">
