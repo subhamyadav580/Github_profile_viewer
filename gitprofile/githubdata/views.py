@@ -2,6 +2,7 @@ from django.shortcuts import render
 import requests
 
 def home(request):
+    print("Request data: ", request.data)
     if request.method == 'POST':
         username = request.POST['username']
         print(username)
